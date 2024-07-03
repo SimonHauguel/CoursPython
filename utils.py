@@ -48,6 +48,9 @@ class Board:
         assert color in (PAWN.BLACK, PAWN.WHITE, PAWN.NO_PAWN), f"Erreur pour l'ajout d'un pion : {color} n'est pas une couleur connue"
         self.data_board[y][x]["pawn"] = color
 
+    def remove_pawn(self, x, y):
+        self.data_board[y][x]["pawn"] = PAWN.NO_PAWN
+
     def add_tile(self, x, y, color):
         """
         Ajoute un pion de couleur `color` a l'emplacement (`x`, `y`)

@@ -4,6 +4,7 @@ from flask_socketio import SocketIO, send, emit
 from utils import *
 from part1 import *
 from part2 import *
+from part3 import *
 
 board = Board()
 
@@ -22,10 +23,13 @@ def handle_message(msg):
 
 @socketio.on('find_possible_move')
 def handle_find_possible_move(location):
-
-    print(location)
-
     emit("response_find_possible_move", find_all_possible_moves(board, (location["x"], location["y"])))
+
+@socketio.on('move')
+def handle_move(info_object):
+    
+    emit("response_move", move_pawn(board, (info_object["from"]["x"], info_object["from"]["y"]), (info_object["to"]["x"], info_object["to"]["y"])).data_board)
+
 
 
 @socketio.on("join")
