@@ -8,6 +8,8 @@
     --pawn-black: #7E30E1;
     --pawn-white: #E26EE5;
 
+    --available-move: #f0def8;
+
     --main-undefined: #94feb4;
 }
 
@@ -66,4 +68,13 @@ tbody {
     width: 60px;
     height: 60px;
     border: 3px #392b37;   
+}
+
+.available-move {
+    border-radius: 50%;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px #392b37;
+    background-color: var(--available-move);
 }

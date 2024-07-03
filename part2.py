@@ -1,23 +1,127 @@
 import utils
 
-
 def find_all_possible_moves(board, pawn):
     """
     board : Board object
     pawn : coordonnées (x, y) du pion
-
+ 
     Suivant un plateau de jeu, et un pion,
     renvoyer la liste de tous les coups possibles de ce pion.
-
+ 
     La liste retournée sera une liste de 2-tuple
     """
+    result = manger_pion(board, pawn)
+    return result
 
-    # TODO
+def manger_pion(board, pawn):
+    couleur_pion = board.get_pawn(pawn)
+    
+    coup_possibles = []
+    x = pawn[0]
+    y = pawn[1]
 
-    print(board.get_pawn((3, 4)))
-    print(board.get_pawn((3, 4)))
+    if couleur_pion == 1: # blanc
+        coup_possibles = [(x + 1, y - 1), (x - 1, y - 1)]
+        if x == 0:
+            coup_possibles = [(x + 1, y - 1)]
+        if x == 7:
+            coup_possibles = [(x - 1, y - 1)]
+        if y == 0:
+            coup_possibles = []
+        
+        coup_possibles = list(filter(lambda x: board.get_pawn(x) == -1 ,coup_possibles))
 
-    return [(1, 4), (3, 4)]
+        if len(coup_possibles) == 2:
+            return coup_possibles
+        if len(coup_possibles) == 1:
+            if x == 0 or x == 7:
+                return coup_possibles
+            
+            if board.get_pawn((x + 1, y - 1)) == 1:
+                return coup_possibles
+            if board.get_pawn((x - 1, y - 1)) == 1:
+                return coup_possibles
+            
+            if board.get_pawn((x + 1, y - 1)) == 0:
+                if y == 1:
+                    return coup_possibles
+                if x == 6:
+                    return coup_possibles
+                if board.get_pawn((x + 2, y - 2)) == -1:
+                    coup_possibles += [(x + 2, y - 2)]
+                    return coup_possibles
+                else:
+                    return coup_possibles
+            
+            if board.get_pawn((x - 1, y - 1)) == 0:
+                if y == 1:
+                    return coup_possibles
+                if x == 1:
+                    return coup_possibles
+                if board.get_pawn((x - 2, y - 2)) == -1:
+                    coup_possibles += [(x - 2, y - 2)]
+                    return coup_possibles
+                else:
+                    return coup_possibles
+
+            
+        if len(coup_possibles) == 0:
+            if x == 0:
+                return coup_possibles
+            if x == 7:
+                return coup_possibles
+
+    
+
+
+
+
+    if couleur_pion == 0: # noir
+        coup_possibles = [(x + 1, y + 1), (x - 1, y + 1)]
+        if x == 0:
+            coup_possibles = [(x + 1, y + 1)]
+        if x == 7:
+            coup_possibles = [(x - 1, y + 1)]
+        if y == 7:
+            coup_possibles = []
+
+        coup_possibles = list(filter(lambda x: board.get_pawn(x) == -1 ,coup_possibles)) # TODO
+
+        if len(coup_possibles) == 2:
+            return coup_possibles
+        if len(coup_possibles) == 1:
+            if x == 0 or x == 7:
+                return coup_possibles
+            
+            if board.get_pawn((x + 1, y + 1)) == 0:
+                return coup_possibles
+            if board.get_pawn((x - 1, y + 1)) == 0:
+                return coup_possibles
+            
+            if board.get_pawn((x + 1, y + 1)) == 1:
+                if y == 6:
+                    return coup_possibles
+                if x == 6:
+                    return coup_possibles
+                if board.get_pawn((x + 2, y + 2)) == -1:
+                    coup_possibles += [(x + 2, y + 2)]
+                    return coup_possibles
+                else:
+                    return coup_possibles
+            
+            if board.get_pawn((x - 1, y + 1)) == 1:
+                if y == 6:
+                    return coup_possibles
+                if x == 1:
+                    return coup_possibles
+                if board.get_pawn((x - 2, y + 2)) == -1:
+                    coup_possibles += [(x - 2, y + 2)]
+                    return coup_possibles
+                else:
+                    return coup_possibles
+
+
+    return coup_possibles
 
 if set(find_all_possible_moves(
     utils.new_def_board(
@@ -46,7 +150,7 @@ x x x x
  x x x x
 x x x x 
 """
-), (1, 2))) != {(1, 3), (3, 3)}: print("CASE 2 (black): FAILED :( !")
+), (1, 2))) != {(0, 3), (2, 3)}: print("CASE 2 (black): FAILED :( !")
 else : print("CASE 2 (black): SUCCESS :) !")
 
 if set(find_all_possible_moves(
@@ -133,7 +237,7 @@ if set(find_all_possible_moves(
 o o o o 
  o o o o
     x   
-  x    
+   x    
 x x x x 
  x x x x
 x x x x 
@@ -230,5 +334,3 @@ x x x x
 """
 ), (1, 7))) != set(): print("CASE 14 (black with eatable opponent but wall): FAILED :( !")
 else : print("CASE 14 (black with eatable opponent but wall): SUCCESS :) !")
-
-

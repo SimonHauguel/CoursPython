@@ -3,6 +3,7 @@ from flask_socketio import SocketIO, send, emit
 
 from utils import *
 from part1 import *
+from part2 import *
 
 board = Board()
 
@@ -21,34 +22,10 @@ def handle_message(msg):
 
 @socketio.on('find_possible_move')
 def handle_find_possible_move(location):
-    
-    solutions_data = {"solutions" : []}
 
-    if (0 > location["x"] or location["x"] > 7 or 0 > location["y"] or location["y"] > 7): 
-        emit("response_find_possible_move", solutions_data)
+    print(location)
 
-    solutions = solutions_data["solutions"]
-
-    loc_x = location["x"]
-    loc_y = location["y"]
-
-    if board.actual_player == TILE.WHITE:
-
-        if (1 <= loc_x <= 6 and 1 <= loc_y <= 6):
-            if board.get_value_at(loc_x-1, loc_y-1) == PAWN.NO_PAWN:
-                solutions.append({"x" : loc_x-1, "y" : loc_y-1})
-            if board.get_value_at(loc_x+1, loc_y-1) == PAWN.NO_PAWN:
-                solutions.append({"x" : loc_x+1, "y" : loc_y-1})
-
-    elif board.actual_player == TILE.BLACK:
-        if (1 <= loc_x <= 6 and 1 <= loc_y <= 6):
-            if board.get_value_at(loc_x-1, loc_y-1) == PAWN.NO_PAWN:
-                solutions.append({"x":loc_x-1, "y":loc_y-1})
-            if board.get_value_at(loc_x+1, loc_y-1) == PAWN.NO_PAWN:
-                solutions.append({"x":loc_x+1, "y":loc_y-1})
-
-
-    emit("response_find_possible_move", solutions_data)
+    emit("response_find_possible_move", find_all_possible_moves(board, (location["x"], location["y"])))
 
 
 @socketio.on("join")
@@ -58,6 +35,9 @@ def handle_new_join(obj_username):
     res = build_initial_board(board)
 
     if (res): board.players.append(username)
+
+    for x in res: 
+        for y in x: y["available_move"] = False
 
     emit("join_response", res)
 

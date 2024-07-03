@@ -38,7 +38,7 @@ class Board:
         self.players = []
 
     def get_pawn(self, coord):
-        return self.data_board[coord[0]][coord[1]]["pawn"]
+        return self.data_board[coord[1]][coord[0]]["pawn"]
 
     def add_pawn(self, x, y, color):
         """
