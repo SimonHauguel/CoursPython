@@ -334,3 +334,93 @@ x x x x
 """
 ), (1, 7))) != set(): print("CASE 14 (black with eatable opponent but wall): FAILED :( !")
 else : print("CASE 14 (black with eatable opponent but wall): SUCCESS :) !")
+
+if set(find_all_possible_moves(
+    utils.new_def_board(
+"""
+ o o o o
+o o o o 
+ o o o o
+        
+ o o    
+x x x x 
+ x x x x
+x x x x 
+"""
+), (2, 5))) != {(0, 3), (4, 3)}: print("CASE 15 (white with 2 eatable opponents): FAILED :( !")
+else : print("CASE 15 (white with 2 eatable opponents): SUCCESS :) !")
+
+if set(find_all_possible_moves(
+    utils.new_def_board(
+"""
+ o o o o
+o o o o 
+ o o o o
+  x x   
+        
+x x x x 
+ x x x x
+x x x x 
+"""
+), (3, 2))) != {(1, 4), (5, 4)}: print("CASE 16 (black with 2 eatable opponents): FAILED :( !")
+else : print("CASE 16 (black with 2 eatable opponents): SUCCESS :) !")
+
+if set(find_all_possible_moves(
+    utils.new_def_board(
+"""
+ o o o o
+o o o o 
+ o o o o
+        
+ o x    
+x x x x 
+ x x x x
+x x x x 
+"""
+), (2, 5))) != {(0, 3)}: print("CASE 17 (white with 1 eatable opponent and 1 friend): FAILED :( !")
+else : print("CASE 17 (white with 1 eatable opponent and 1 friend): SUCCESS :) !")
+
+if set(find_all_possible_moves(
+    utils.new_def_board(
+"""
+ o o o o
+o o o o 
+ o o o o
+  o x   
+        
+x x x x 
+ x x x x
+x x x x 
+"""
+), (3, 2))) != {(5, 4)}: print("CASE 18 (black with 1 eatable opponent and 1 friend): FAILED :( !")
+else : print("CASE 18 (black with 1 eatable opponent and 1 friend): SUCCESS :) !")
+
+if set(find_all_possible_moves(
+    utils.new_def_board(
+"""
+ o o o o
+o o o o 
+ o o o o
+        
+ x x    
+x x x x 
+ x x x x
+x x x x 
+"""
+), (2, 5))) != set(): print("CASE 19 (white with 2 friends): FAILED :( !")
+else : print("CASE 19 (white with 2 friends): SUCCESS :) !")
+
+if set(find_all_possible_moves(
+    utils.new_def_board(
+"""
+ o o o o
+o o o o 
+ o o o o
+  o o   
+        
+x x x x 
+ x x x x
+x x x x 
+"""
+), (3, 2))) != set(): print("CASE 20 (black with 2 friends): FAILED :( !")
+else : print("CASE 20 (black with 2 friends): SUCCESS :) !")
